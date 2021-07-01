@@ -55,8 +55,8 @@ dependencies {
     implementation "androidx.activity:activity-compose:1.3.0-rc01"
 
 
-    implementation "com.google.accompanist:accompanist-pager:0.12.0"
-    implementation "com.google.accompanist:accompanist-pager-indicators:0.12.0"
+    implementation "com.google.accompanist:accompanist-pager:0.13.0"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.13.0"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
