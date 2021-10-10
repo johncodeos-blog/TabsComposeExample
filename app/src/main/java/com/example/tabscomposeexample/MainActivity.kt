@@ -22,22 +22,20 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
-    @ExperimentalMaterialApi
-    @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MainScreen()
         }
     }
+
 }
 
-@ExperimentalPagerApi
-@ExperimentalMaterialApi
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MainScreen() {
     val tabs = listOf(TabItem.Music, TabItem.Movies, TabItem.Books)
-    val pagerState = rememberPagerState(pageCount = tabs.size)
+    val pagerState = rememberPagerState()
     Scaffold(
         topBar = { TopBar() },
     ) {
@@ -48,8 +46,7 @@ fun MainScreen() {
     }
 }
 
-@ExperimentalPagerApi
-@ExperimentalMaterialApi
+
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
@@ -71,8 +68,8 @@ fun TopBarPreview() {
     TopBar()
 }
 
-@ExperimentalPagerApi
-@ExperimentalMaterialApi
+
+@OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     val scope = rememberCoroutineScope()
@@ -105,8 +102,7 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     }
 }
 
-@ExperimentalMaterialApi
-@ExperimentalPagerApi
+@OptIn(ExperimentalPagerApi::class)
 @Preview(showBackground = true)
 @Composable
 fun TabsPreview() {
@@ -115,20 +111,20 @@ fun TabsPreview() {
         TabItem.Movies,
         TabItem.Books
     )
-    val pagerState = rememberPagerState(pageCount = tabs.size)
+    val pagerState = rememberPagerState()
     Tabs(tabs = tabs, pagerState = pagerState)
 }
 
-@ExperimentalPagerApi
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
-    HorizontalPager(state = pagerState) { page ->
+    HorizontalPager(state = pagerState, count = tabs.size) { page ->
         tabs[page].screen()
     }
 }
 
-@ExperimentalMaterialApi
-@ExperimentalPagerApi
+
+@OptIn(ExperimentalPagerApi::class)
 @Preview(showBackground = true)
 @Composable
 fun TabsContentPreview() {
@@ -137,6 +133,6 @@ fun TabsContentPreview() {
         TabItem.Movies,
         TabItem.Books
     )
-    val pagerState = rememberPagerState(pageCount = tabs.size)
+    val pagerState = rememberPagerState()
     TabsContent(tabs = tabs, pagerState = pagerState)
 }
