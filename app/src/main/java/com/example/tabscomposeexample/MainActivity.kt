@@ -22,8 +22,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
-    @ExperimentalMaterialApi
-    @ExperimentalPagerApi
+    @OptIn(ExperimentalMaterialApi::class, ExperimentalPagerApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -33,8 +32,7 @@ class MainActivity : ComponentActivity() {
 
 }
 
-@ExperimentalMaterialApi
-@ExperimentalPagerApi
+@OptIn(ExperimentalMaterialApi::class, ExperimentalPagerApi::class)
 @Composable
 fun MainScreen() {
     val tabs = listOf(TabItem.Music, TabItem.Movies, TabItem.Books)
@@ -50,8 +48,7 @@ fun MainScreen() {
 }
 
 
-@ExperimentalMaterialApi
-@ExperimentalPagerApi
+@OptIn(ExperimentalMaterialApi::class, ExperimentalPagerApi::class)
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
@@ -74,8 +71,7 @@ fun TopBarPreview() {
 }
 
 
-@ExperimentalMaterialApi
-@ExperimentalPagerApi
+@OptIn(ExperimentalMaterialApi::class, ExperimentalPagerApi::class)
 @Composable
 fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     val scope = rememberCoroutineScope()
@@ -108,8 +104,7 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     }
 }
 
-@ExperimentalPagerApi
-@ExperimentalMaterialApi
+@OptIn(ExperimentalMaterialApi::class, ExperimentalPagerApi::class)
 @Preview(showBackground = true)
 @Composable
 fun TabsPreview() {
@@ -122,7 +117,7 @@ fun TabsPreview() {
     Tabs(tabs = tabs, pagerState = pagerState)
 }
 
-@ExperimentalPagerApi
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
     HorizontalPager(state = pagerState, count = tabs.size) { page ->
@@ -131,7 +126,7 @@ fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
 }
 
 
-@ExperimentalPagerApi
+@OptIn(ExperimentalPagerApi::class)
 @Preview(showBackground = true)
 @Composable
 fun TabsContentPreview() {
