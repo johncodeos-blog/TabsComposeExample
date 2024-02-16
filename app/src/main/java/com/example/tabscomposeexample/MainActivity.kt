@@ -3,8 +3,12 @@ package com.example.tabscomposeexample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -15,7 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
 
 
@@ -30,11 +33,13 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainScreen() {
     val tabs = listOf(TabItem.Music, TabItem.Movies, TabItem.Books)
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = {
+        tabs.size
+    })
     Scaffold(
         topBar = { TopBar() },
     ) { padding ->
@@ -68,7 +73,7 @@ fun TopBarPreview() {
 }
 
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     val scope = rememberCoroutineScope()
@@ -76,14 +81,8 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     TabRow(
         // Our selected tab is our current page
         selectedTabIndex = pagerState.currentPage,
-        // Override the indicator, using the provided pagerTabIndicatorOffset modifier
         backgroundColor = colorResource(id = R.color.colorPrimaryDark),
-        contentColor = Color.White,
-        indicator = { tabPositions ->
-            TabRowDefaults.Indicator(
-                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
-            )
-        }) {
+        contentColor = Color.White) {
         // Add tabs for all of our pages
         tabs.forEachIndexed { index, tab ->
             // OR Tab()
@@ -101,7 +100,7 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Preview(showBackground = true)
 @Composable
 fun TabsPreview() {
@@ -110,20 +109,22 @@ fun TabsPreview() {
         TabItem.Movies,
         TabItem.Books
     )
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = {
+        tabs.size
+    })
     Tabs(tabs = tabs, pagerState = pagerState)
 }
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
-    HorizontalPager(state = pagerState, count = tabs.size) { page ->
+    HorizontalPager(state = pagerState) { page ->
         tabs[page].screen()
     }
 }
 
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Preview(showBackground = true)
 @Composable
 fun TabsContentPreview() {
@@ -132,6 +133,8 @@ fun TabsContentPreview() {
         TabItem.Movies,
         TabItem.Books
     )
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = {
+        tabs.size
+    })
     TabsContent(tabs = tabs, pagerState = pagerState)
 }
